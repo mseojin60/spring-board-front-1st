@@ -20,24 +20,14 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        {/* <Route
+        <Route
           path="/"
           element={
             <PrivateRoute>
               <HomePage />
             </PrivateRoute>
           }
-        /> */}
-        <Route path="/" element={<HomePage />} />
-        {/* <Route
-          path="/board"
-          element={
-            <PrivateRoute>
-              <BoardPage />
-            </PrivateRoute>
-          }
-        /> */}
-        <Route path="/board" element={<BoardPage />} />
+        />
       </Routes>
     </BrowserRouter>
   );
