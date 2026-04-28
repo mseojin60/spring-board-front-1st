@@ -1,6 +1,13 @@
 import { useState } from "react";
 import axiosInstance from "../api/axiosInstance";
 
+interface CommentType {
+  id: number;
+  content: string;
+  email: string;
+  createdAt: string;
+}
+
 interface Post {
   id: number;
   content: string;
@@ -9,6 +16,7 @@ interface Post {
   liked: boolean;
   commentCount: number;
   createdAt: string;
+  comments: CommentType[];
 }
 
 interface Props {
@@ -114,6 +122,33 @@ export default function PostCard({ post, myEmail, onRefresh }: Props) {
           >
             등록
           </button>
+        </div>
+      )}
+
+      {/* 댓글 목록 */}
+      {showComment && (
+        <div className="mt-3">
+          {post.comments.map((c: CommentType) => (
+            <div key={c.id} className="py-2 border-t border-gray-700">
+              <span className="text-xs text-cyan-400">{c.email}</span>
+              <p className="text-sm text-gray-300">{c.content}</p>
+            </div>
+          ))}
+          {/* 댓글 입력 */}
+          <div className="mt-2 flex gap-2">
+            <input
+              className="flex-1 bg-[#0d1117] border border-gray-700 rounded-lg px-3 py-1.5 text-sm outline-none focus:border-cyan-500 text-gray-300 placeholder-gray-600 transition"
+              placeholder="댓글을 입력하세요..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+            <button
+              onClick={handleComment}
+              className="bg-cyan-500 hover:bg-cyan-400 text-[#0d1117] font-bold px-3 py-1.5 rounded-lg text-sm transition"
+            >
+              등록
+            </button>
+          </div>
         </div>
       )}
     </div>

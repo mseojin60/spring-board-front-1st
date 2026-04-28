@@ -3,6 +3,13 @@ import axiosInstance from "../api/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import PostCard from "../components/PostCard";
 
+interface CommentType {
+  id: number;
+  content: string;
+  email: string;
+  createdAt: string;
+}
+
 interface Post {
   id: number;
   content: string;
@@ -11,6 +18,7 @@ interface Post {
   liked: boolean;
   commentCount: number;
   createdAt: string;
+  comments: CommentType[];
 }
 
 export default function HomePage() {
