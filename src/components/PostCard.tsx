@@ -64,7 +64,6 @@ export default function PostCard({ post, myEmail, onRefresh }: Props) {
         content: comment,
       });
       setComment("");
-      setShowComment(false);
       onRefresh();
     } catch (err) {
       handleError(err);
