@@ -6,7 +6,7 @@ import PostCard from "../components/PostCard";
 interface Post {
   id: number;
   content: string;
-  authorEmail: string;
+  email: string;
   likeCount: number;
   liked: boolean;
   commentCount: number;
@@ -33,9 +33,13 @@ export default function HomePage() {
 
   const handlePost = async () => {
     if (!content.trim()) return;
-    await axiosInstance.post("/api/posts", { content });
-    setContent("");
-    fetchPosts();
+    try {
+      await axiosInstance.post("/api/posts", { content });
+      setContent("");
+      fetchPosts();
+    } catch (error) {
+      console.error("게시 실패:", error);
+    }
   };
 
   const handleLogout = () => {

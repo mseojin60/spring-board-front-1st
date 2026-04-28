@@ -4,7 +4,7 @@ import axiosInstance from "../api/axiosInstance";
 interface Post {
   id: number;
   content: string;
-  authorEmail: string;
+  email: string;
   likeCount: number;
   liked: boolean;
   commentCount: number;
@@ -20,36 +20,54 @@ interface Props {
 export default function PostCard({ post, myEmail, onRefresh }: Props) {
   const [showComment, setShowComment] = useState(false);
   const [comment, setComment] = useState("");
-  const isAuthor = post.authorEmail === myEmail;
+  const isAuthor = post.email === myEmail;
 
-  const handleLike = async () => {
-    if (post.liked) {
-      await axiosInstance.delete(`/api/likes/${post.id}`);
-    } else {
-      await axiosInstance.post(`/api/likes/${post.id}`);
-    }
-    onRefresh();
+  const handleError = (error: unknown) => {
+    console.error("API 요청 중 오류:", error);
+    alert("작업을 완료하지 못했습니다. 서버 상태를 확인하세요!");
   };
 
+  const handleLike = async () => {
+    try {
+      if (post.liked) {
+        await axiosInstance.delete(`/api/likes/${post.id}`);
+      } else {
+        await axiosInstance.post(`/api/likes/${post.id}`);
+      }
+      onRefresh(); // 성공 시에만 새로고침
+    } catch (err) {
+      handleError(err);
+    }
+  };
   const handleDelete = async () => {
     if (!confirm("게시물을 삭제할까요?")) return;
-    await axiosInstance.delete(`/api/posts/${post.id}`);
-    onRefresh();
+    try {
+      await axiosInstance.delete(`/api/posts/${post.id}`);
+      onRefresh();
+    } catch (err) {
+      handleError(err);
+    }
   };
 
   const handleComment = async () => {
     if (!comment.trim()) return;
-    await axiosInstance.post(`/api/comments/${post.id}`, { content: comment });
-    setComment("");
-    setShowComment(false);
-    onRefresh();
+    try {
+      await axiosInstance.post(`/api/comments/${post.id}`, {
+        content: comment,
+      });
+      setComment("");
+      setShowComment(false);
+      onRefresh();
+    } catch (err) {
+      handleError(err);
+    }
   };
 
   return (
     <div className="bg-[#161b22] border border-gray-700 rounded-xl p-4">
       {/* 작성자 + 삭제 */}
       <div className="flex justify-between items-center mb-2">
-        <span className="text-sm text-cyan-400">{post.authorEmail}</span>
+        <span className="text-sm text-cyan-400">{post.email}</span>
         {isAuthor && (
           <button
             onClick={handleDelete}
