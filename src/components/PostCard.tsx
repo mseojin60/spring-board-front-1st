@@ -134,21 +134,6 @@ export default function PostCard({ post, myEmail, onRefresh }: Props) {
               <p className="text-sm text-gray-300">{c.content}</p>
             </div>
           ))}
-          {/* 댓글 입력 */}
-          <div className="mt-2 flex gap-2">
-            <input
-              className="flex-1 bg-[#0d1117] border border-gray-700 rounded-lg px-3 py-1.5 text-sm outline-none focus:border-cyan-500 text-gray-300 placeholder-gray-600 transition"
-              placeholder="댓글을 입력하세요..."
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-            <button
-              onClick={handleComment}
-              className="bg-cyan-500 hover:bg-cyan-400 text-[#0d1117] font-bold px-3 py-1.5 rounded-lg text-sm transition"
-            >
-              등록
-            </button>
-          </div>
         </div>
       )}
     </div>
