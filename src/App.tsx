@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import BoardPage from "./pages/BoardPage";
 import type { JSX } from "react";
 
 // 로그인 여부 확인
